@@ -23,8 +23,8 @@ let isRolling = false;
 
 
 function rollDice() {
-    let diceType = prompt("Escolha o tipo de dado (D6, D8, D10, D12 ou D20):").toUpperCase();
-    let modifier = prompt("Digite o valor do modificador (opcional):");
+    let diceType = prompt("Choose the type of dice (D6, D8, D10, D12 or D20):").toUpperCase();
+    let modifier = prompt("Enter the value of the modifier (optional):");
     let result = 0;
 
     if (diceType === null) return;
@@ -48,7 +48,7 @@ function rollDice() {
             result = Math.floor(Math.random() * 20) + 1;
             break;
         default:
-            alert("Tipo de dado inválido.");
+            alert("Invalid dice type.");
             return;
     }
 
@@ -56,7 +56,7 @@ function rollDice() {
     result += modifier;
 
 
-    alert(`Resultado do ${diceType}: ${result}`);
+    alert(`Result of the ${diceType}: ${result}`);
 }
 
 
@@ -78,7 +78,7 @@ function onClick() {
         setTimeout(() => {
             isRolling = false;
             const result = Math.floor(Math.random() * 20) + 1;
-            alert(`Resultado do D20: ${result}`);
+            alert(`Result of the D20: ${result}`);
         }, 1000);
 
         function animateAccelerated() {
