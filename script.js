@@ -1,46 +1,45 @@
-// Cria um novo objeto de cena
-var scene = new THREE.Scene();
-
-// Cria uma câmera
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 5;
-
-// Cria um renderizador
-var renderer = new THREE.WebGLRenderer();
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0x888888); 
 document.body.appendChild(renderer.domElement);
 
-// Cria a geometria do icosaedro (D20)
-var geometry = new THREE.IcosahedronGeometry(1, 0);
 
-// Cria o material
-var material = new THREE.MeshBasicMaterial({color: 0x00ff00, wireframe: true});
+const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(1, 1, 1).normalize();
+scene.add(light);
 
-// Cria o objeto de malha (mesh)
-var d20 = new THREE.Mesh(geometry, material);
 
-// Adiciona o D20 à cena
-scene.add(d20);
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshPhongMaterial({ color: 0xadd8e6 }); 
+const cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
 
-// Função de animação
+camera.position.z = 5;
+
+
+function onMouseMove(event) {
+
+  const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+  const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+
+
+  cube.position.x = mouseX * 5;
+  cube.position.y = mouseY * 5;
+
+
+  renderer.render(scene, camera);
+}
+
+
+document.addEventListener('mousemove', onMouseMove, false);
+
+
 function animate() {
-    requestAnimationFrame(animate);
-
-    // Rotaciona o D20
-    d20.rotation.x += 0.01;
-    d20.rotation.y += 0.01;
-
-    // Renderiza a cena
-    renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+  cube.rotation.x += 0.01;
+  cube.rotation.y += 0.01;
 }
 
-function rollDice() {
-    var dice = document.getElementById('dice');
-    dice.className = 'dice spin';
-    setTimeout(function() {
-        dice.className = 'dice';
-    }, 3000);
-}
-
-// Inicia a animação
 animate();
